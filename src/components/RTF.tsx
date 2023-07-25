@@ -84,11 +84,6 @@ export default function RTF({
                 className: "w-fit",
               },
             },
-            br: {
-              props: {
-                className: "my-8 py-8",
-              },
-            },
             ins: {
               props: {
                 className: "mt-4",

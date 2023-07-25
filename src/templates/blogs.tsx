@@ -25,7 +25,7 @@ export const getHeadConfig: GetHeadConfig<
   TemplateRenderProps
 > = (): HeadConfig => {
   return {
-    title: "Centrum | Blogs",
+    title: "PMI | Blogs",
     charset: "UTF-8",
     viewport: "width=device-width, initial-scale=1",
   };

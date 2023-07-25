@@ -147,7 +147,7 @@ const Product: Template<TemplateRenderProps> = ({
             <div className="w-1/2 py-8 flex flex-col space-y-6">
               <h1 className="font-bold text-2xl">{name}</h1>
               <div className="gap-y-4">
-                <RTF>{richTextDescription}</RTF>
+                <RTF>{richTextDescription.replaceAll("<br>", "<br><br>")}</RTF>
                 {/* <LexicalRichText
                   serializedAST={JSON.stringify(richTextDescription)}
                 /> */}

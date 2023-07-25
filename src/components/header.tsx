@@ -137,7 +137,10 @@ const Header = () => {
                 path && !path.includes("product-grid") ? (
                   <SearchBar
                     hideRecentSearches={true}
-                    customCssClasses={{ searchBarContainer: "!mb-0" }}
+                    customCssClasses={{
+                      searchBarContainer: "!mb-0",
+                      searchButton: "text-black",
+                    }}
                     visualAutocompleteConfig={{
                       entityPreviewSearcher: entityPreviewSearcher,
                       includedVerticals: ["products"],
@@ -149,7 +152,10 @@ const Header = () => {
                 ) : (
                   <SearchBar
                     hideRecentSearches={true}
-                    customCssClasses={{ searchBarContainer: "!mb-0" }}
+                    customCssClasses={{
+                      searchBarContainer: "!mb-0",
+                      searchButton: "text-black",
+                    }}
                     visualAutocompleteConfig={{
                       entityPreviewSearcher: entityPreviewSearcher,
                       includedVerticals: ["products"],
@@ -161,7 +167,10 @@ const Header = () => {
                 )
               ) : (
                 <SearchBar
-                  customCssClasses={{ searchBarContainer: "!mb-0" }}
+                  customCssClasses={{
+                    searchBarContainer: "!mb-0",
+                    searchButton: "text-black",
+                  }}
                   hideRecentSearches={true}
                 />
               )}
