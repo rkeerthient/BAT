@@ -12,9 +12,9 @@ const FAQCard = (props: CardProps<Faq>): JSX.Element => {
 
   return (
     <div className="w-full border-b border-gray-300 p-4 my-4 ">
-      <div className="text-xl">
+      <div className="text-lg font-light">
         <div onClick={() => setIsActive(!isActive)}>
-          <div className="text-primary-text-color text-2xl hover:cursor-pointer dark:text-dark_primary">
+          <div className="   hover:cursor-pointer  ">
             <span>{result.name}</span>
             <div style={{ float: "right" }}>
               {isActive ? (
@@ -26,17 +26,8 @@ const FAQCard = (props: CardProps<Faq>): JSX.Element => {
           </div>
         </div>
         {isActive && (
-          <div className="!text-lg text-faq-text-color mt-3 dark:text-dark_primary">
+          <div className="   mt-3  ">
             <RTF>{result.rawData.answer}</RTF>
-            <div className=" mt-4">
-              <a
-                href={result.rawData.landingPageUrl}
-                className="px-6 py-2 w-fit group  relative text-lg  bg-[#99cb39] text-[#083b3a] font-bold "
-              >
-                Learn more
-                <div className="h-1 bg-teal-900 absolute bottom-0 left-0 transition-width duration-75 group-hover:w-full"></div>
-              </a>
-            </div>
           </div>
         )}
       </div>

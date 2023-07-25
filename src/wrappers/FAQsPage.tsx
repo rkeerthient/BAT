@@ -10,12 +10,11 @@ import {
 import * as React from "react";
 import { useEffect } from "react";
 import FAQCard from "../components/Cards/FAQCard";
+import Loader from "../components/Loader";
 
 const FAQsPage = ({ sendDataToParent }: any) => {
   const searchActions = useSearchActions();
-  const faqResults = useSearchState((state) => state.vertical.results) || [];
-  const loadingState =
-    useSearchState((state) => state.searchStatus.isLoading) || true;
+  const loading = useSearchState((state) => state.searchStatus.isLoading);
 
   useEffect(() => {
     const urlSearchParams = new URLSearchParams(window.location.search);
@@ -25,48 +24,35 @@ const FAQsPage = ({ sendDataToParent }: any) => {
     searchActions.executeVerticalQuery();
   }, []);
 
-  useEffect(() => {
-    if (loadingState && faqResults.length >= 1) {
-      let mEntity: any = [];
-      faqResults.map((item: any) =>
-        mEntity.push({
-          "@type": "Question",
-          name: item.rawData.name,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: item.rawData.answer,
-          },
-        })
-      );
-      sendDataToParent({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: mEntity,
-      });
-    }
-  }, [faqResults, loadingState]);
-
   return (
     <>
-      <div className="flex mt-4">
-        <div className="w-64 shrink-0 mr-5 mt-4">
-          <StandardFacets />
-        </div>
-        <div className="flex-grow">
-          <div className="flex flex-col items-baseline">
-            <ResultsCount />
-            <AppliedFilters />
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="flex mt-4">
+          <div className="w-72  mr-5 ">
+            <StandardFacets
+              customCssClasses={{
+                standardFacetsContainer: "!mt-14  bg-white p-2",
+              }}
+            />
           </div>
-          <VerticalResults
-            CardComponent={FAQCard}
-            customCssClasses={{
-              verticalResultsContainer: `max-w-screen-xl`,
-            }}
-          />
-          <Pagination />
-          <LocationBias />
+          <div className="w-full">
+            <div className="flex flex-col items-baseline">
+              <ResultsCount />
+              <AppliedFilters />
+            </div>
+            <VerticalResults
+              CardComponent={FAQCard}
+              customCssClasses={{
+                verticalResultsContainer: ` bg-white`,
+              }}
+            />
+            <Pagination />
+            <LocationBias />
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

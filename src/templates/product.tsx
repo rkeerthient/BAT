@@ -139,7 +139,7 @@ const Product: Template<TemplateRenderProps> = ({
   return (
     <>
       <PageLayout _site={_site}>
-        <div className="centered-container bg-white max-w-3xl">
+        <div className="centered-container bg-white max-w-3xl my-6 pt-8">
           <div className="flex gap-2">
             <div className="w-1/2">
               <Image image={photoGallery[0]}></Image>
