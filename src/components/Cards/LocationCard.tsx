@@ -21,12 +21,12 @@ const LocationCard: CardComponent<any> = ({ result }) => {
   var gmapsLink = gmapsAddress.concat('"');
 
   return (
-    <div className="p-4 border border-transparent hover:border hover:border-gray-400 hovCards bg-white">
-      <a target="_blank" href={`${result.rawData.slug}`} className="space-y-6">
-        <h1 className="text-slate-900 text-xl">{result.rawData.name}</h1>
+    <div className="p-4 border-2 border-transparent hover:border-2  border-[#f1f1f1] hovCards  ">
+      <a target="_blank" className="space-y-6 hover:cursor-pointer">
+        <h1 className="text-slate-900 text-lg">{result.rawData.name}</h1>
         <div className="flex">
-          <p className="text-sm text-slate-700">{address.line1}</p>
-          <p className="text-sm text-slate-700">
+          <p className="  text-slate-700">{address.line1}</p>
+          <p className="  text-slate-700">
             {address.city}, {address.region}, {address.postalCode}{" "}
           </p>
           {/* <p className="mt-1 text-xs italic text-slate-500">
@@ -37,7 +37,7 @@ const LocationCard: CardComponent<any> = ({ result }) => {
           <a
             target="_blank"
             href={gmapsLink}
-            className="CTA-1 !text-sm hover:underline mx-auto flex justify-center"
+            className="CTA-1   hover:underline mx-auto flex justify-center"
           >
             Get Directions
           </a>

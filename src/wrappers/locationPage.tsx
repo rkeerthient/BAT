@@ -77,24 +77,10 @@ const LocationPage = () => {
             >
               <ResultsCount />
               <AppliedFilters />
-              <div className="bg-white p-2">
-                FIND A STORE NEAR YOU Looking for Vuse products near you? Simply
-                enter your location or postcode into the search bar, and we'll
-                provide you with a list of nearby Vuse stockists, including
-                major retailers like Asda, Boots, Tesco, Sainsbury’s and Co-op.
-                Discover a list of local shops and stores in just a few clicks
-                that carry our range of vape kits, disposables, pods and refills
-                to help meet your vaping needs in cities including Edinburgh
-                Leeds London Manchester Sheffield Our locator will also guide
-                you to Vuse drop-off stations where we will try and find a more
-                sustainable way to dispose of your old pods and devices, to
-                prevent them from ending up in landfill. Read more on our
-                sustainability journey here.
-              </div>
               <VerticalResults
                 CardComponent={LocationCard}
                 customCssClasses={{
-                  verticalResultsContainer: "flex flex-col gap-2",
+                  verticalResultsContainer: "flex flex-col gap-2 bg-white p-2",
                 }}
               />
               <Pagination />
