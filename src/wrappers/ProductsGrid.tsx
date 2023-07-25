@@ -32,7 +32,7 @@ const ProductsGrid = () => {
         </div>
         <div className="flex flex-col space-y-4">
           <VerticalResults
-            CardComponent={StandardCard}
+            CardComponent={ProductCard}
             customCssClasses={{
               verticalResultsContainer: `grid grid-cols-3 gap-2`,
             }}
