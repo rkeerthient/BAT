@@ -20,12 +20,12 @@ const ProductCard = (props: CardProps<Product>) => {
   const [subscr, setSubr] = useState(0);
   const [selectedStrength, setSelectedStrength] = useState(0);
   return (
-    <div className="border bg-white p-6 flex flex-col gap-y-8">
+    <div className="border bg-white p-6 flex flex-col gap-y-8 h-full">
       <a href={`/${slug}`}>
         <div>
           <Image image={photoGallery![0]}></Image>
         </div>
-        <div className="flex flex-col justify-between gap-y-6 h-full">
+        <div className="flex flex-col justify-between gap-y-6 ">
           {c_mixAndMatch && (
             <div className="text-center bg-purple-100 text-purple-800 font-semibold text-sm p-2 w-full">
               {c_mixAndMatch}

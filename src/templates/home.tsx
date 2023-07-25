@@ -22,7 +22,7 @@ export const config: TemplateConfig = {
   name: "home",
 };
 export const getPath: GetPath<TemplateRenderProps> = () => {
-  return `home`;
+  return `index.html`;
 };
 
 export const getHeadConfig: GetHeadConfig<
