@@ -21,17 +21,20 @@ const LocationCard: CardComponent<any> = ({ result }) => {
   var gmapsLink = gmapsAddress.concat('"');
 
   return (
-    <div className="p-4 border-2 border-transparent hover:border-2  border-[#f1f1f1] hovCards  ">
+    <div className="p-8 border-2 border-transparent hover:border-2  border-[#f1f1f1] hovCards  ">
       <a target="_blank" className="space-y-6 hover:cursor-pointer">
-        <h1 className="text-slate-900 text-lg">{result.rawData.name}</h1>
-        <div className="flex">
-          <p className="  text-slate-700">{address.line1}</p>
+        <h1 className="text-slate-700 font-semibold text-lg flex justify-between">
+          <div>{result.rawData.name}</div>
+          <div className=" italic ">
+            {metersToMiles(result.distance ?? 0)} mi
+          </div>
+        </h1>
+        <div className="flex font-light">
           <p className="  text-slate-700">
-            {address.city}, {address.region}, {address.postalCode}{" "}
+            {`${Object.values(address)
+              .filter((value) => value) // Filter out falsy (empty, null, undefined) values
+              .join(", ")}`}
           </p>
-          {/* <p className="mt-1 text-xs italic text-slate-500">
-            {metersToMiles(result.distanceFromFilter ?? 0)} mi
-          </p> */}
         </div>
         <div className="mt-4 w-full   rounded-full !px-6 !py-3 uppercase font-semibold border-2">
           <a
