@@ -5,7 +5,6 @@ import {
   Pagination,
   VerticalResults,
   LocationBias,
-  StandardCard,
   StandardFacets,
 } from "@yext/search-ui-react";
 import * as React from "react";

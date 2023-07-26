@@ -6,7 +6,6 @@ import {
   Pagination,
   VerticalResults,
   LocationBias,
-  StandardCard,
 } from "@yext/search-ui-react";
 import * as React from "react";
 import { useEffect } from "react";

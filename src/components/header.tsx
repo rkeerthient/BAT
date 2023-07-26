@@ -54,7 +54,14 @@ const Header = () => {
     return () => {};
   }, []);
   useEffect(() => {
-    (path === "home" || !path) && searchActions.setUniversal();
+    (path === "home" || !path) && searchActions.setUniversal(),
+      searchActions.setUniversalLimit({
+        faqs: 5,
+        products: 5,
+        locations: 5,
+        blogs: 5,
+        blog_details: 4,
+      });
   }, []);
   const linkDoms = links.map((link) => (
     <div key={link.label}>

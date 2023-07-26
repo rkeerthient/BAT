@@ -1,5 +1,4 @@
 import * as React from "react";
-import Site from "../types/Site";
 import Header from "./header";
 import Footer from "./footer";
 import {
@@ -9,7 +8,7 @@ import {
 import searchConfig from "./searchConfig";
 
 type Props = {
-  _site: Site;
+  _site: any;
   children?: React.ReactNode;
 };
 const searcher = provideHeadless(searchConfig);

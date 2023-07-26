@@ -61,7 +61,7 @@ const ProductCard = (props: CardProps<Product>) => {
                   </svg>
                   <div className="text-sm uppercase">Bundle</div>
                 </div>
-                <div className="font-bold">£{price!.value}</div>
+                {price && <div className="font-bold">£{price.value}</div>}
               </div>
             </div>
           )}
