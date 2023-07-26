@@ -13,6 +13,7 @@ import BlogCard from "../components/Cards/BlogCard";
 import PromoCard from "../components/Cards/PromoCard";
 import Mapboxuniv from "../components/Cards/Mapboxuniv";
 import UnivLocationCard from "../components/Cards/univLocCard";
+import RTF from "../components/RTF";
 
 const HomePage = () => {
   const loading = useSearchState((state) => state.searchStatus.isLoading);
@@ -24,7 +25,7 @@ const HomePage = () => {
         <div className="univLocMap ">
           <Mapboxuniv data={results}></Mapboxuniv>
         </div>
-        <div className="flex flex-col w-full gap-4 mt-4">
+        <div className="flex flex-col w-full gap-4   bg-white">
           {results.map((r: any, index: number) => (
             <CardComponent key={index} result={r} />
           ))}
@@ -69,8 +70,7 @@ const HomePage = () => {
         <Loader></Loader>
       ) : (
         <>
-          <SpellCheck />
-          <DirectAnswer />
+          <DirectAnswer customCssClasses={{ answerContainer: "bg-white" }} />
           <ResultsCount />
           {results ? (
             <UniversalResults

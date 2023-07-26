@@ -26,6 +26,7 @@ import RTF from "../components/RTF";
 import { useState } from "react";
 import NicotineLevel from "../components/Cards/nicotineLevel";
 import { BsTruck } from "react-icons/bs";
+import Favicon from "../assets/images/favicon.ico";
 
 /**
  * Required when Knowledge Graph data is used for a template.
@@ -48,6 +49,8 @@ export const config: TemplateConfig = {
       "c_nicotineStrength",
       "richTextDescription",
       "c_subscriptionPrice",
+      "c_productType",
+      "c_categories",
     ],
     // Defines the scope of entities that qualify for this stream.
     filter: {
@@ -104,6 +107,14 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
           content: document.description,
         },
       },
+      {
+        type: "link",
+        attributes: {
+          rel: "icon",
+          type: "image/x-icon",
+          href: relativePrefixToRoot + Favicon,
+        },
+      },
     ],
   };
 };
@@ -132,6 +143,8 @@ const Product: Template<TemplateRenderProps> = ({
     c_nicotineStrength,
     c_subscriptionPrice,
     richTextDescription,
+    c_productType,
+    c_categories,
   } = document;
 
   const [subscr, setSubr] = useState(0);
@@ -139,7 +152,30 @@ const Product: Template<TemplateRenderProps> = ({
   return (
     <>
       <PageLayout _site={_site}>
-        <div className="centered-container bg-white max-w-3xl my-6 pt-8">
+        <div className="centered-container max-w-3xl my-4 !p-0">
+          <ul className="flex gap-4">
+            <li>
+              <a href="/products">Products</a>
+            </li>
+            <li className="separator">{">"}</li>
+            <li>
+              <a href={`/products/?query=${c_productType}`}>{c_productType}</a>
+            </li>
+            {c_categories && (
+              <>
+                <li className="separator">{">"}</li>
+                <li>
+                  <a href={`/products/?query=${c_categories}`}>
+                    {c_categories}
+                  </a>
+                </li>
+              </>
+            )}
+            <li className="separator">{">"}</li>
+            <li className="font-semibold">{name}</li>
+          </ul>
+        </div>
+        <div className="centered-container bg-white max-w-3xl mb-6 pt-8">
           <div className="flex gap-2">
             <div className="w-1/2">
               <Image image={photoGallery[0]}></Image>
@@ -148,9 +184,6 @@ const Product: Template<TemplateRenderProps> = ({
               <h1 className="font-bold text-2xl">{name}</h1>
               <div className="gap-y-4">
                 <RTF>{richTextDescription.replaceAll("<br>", "<br><br>")}</RTF>
-                {/* <LexicalRichText
-                  serializedAST={JSON.stringify(richTextDescription)}
-                /> */}
               </div>
               {bundle && (
                 <div className="flex flex-col  gap-2">

@@ -14,6 +14,7 @@ import {
 import PageLayout from "../components/page-layout";
 import { useState } from "react";
 import FAQsPage from "../wrappers/FAQsPage";
+import Favicon from "../assets/images/favicon.ico";
 
 export const config: TemplateConfig = {
   name: "faqs",
@@ -22,13 +23,25 @@ export const getPath: GetPath<TemplateRenderProps> = () => {
   return `faqs`;
 };
 
-export const getHeadConfig: GetHeadConfig<
-  TemplateRenderProps
-> = (): HeadConfig => {
+export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
+  relativePrefixToRoot,
+  path,
+  document,
+}): HeadConfig => {
   return {
-    title: "BAT | FAQs",
+    title: "VUSE | FAQs",
     charset: "UTF-8",
     viewport: "width=device-width, initial-scale=1",
+    tags: [
+      {
+        type: "link",
+        attributes: {
+          rel: "icon",
+          type: "image/x-icon",
+          href: relativePrefixToRoot + Favicon,
+        },
+      },
+    ],
   };
 };
 

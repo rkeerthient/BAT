@@ -23,7 +23,7 @@ const UnivLocationCard: CardComponent<any> = ({ result }) => {
   var gmapsLink = gmapsAddress.concat('"');
 
   return (
-    <div className="p-4 border-transparent border hover:border hover:border-gray-400 hovCards  ">
+    <div className="p-4 m-2  border-2   border-[#f1f1f1]   ">
       <div className="flex w-full flex-col">
         <div className="flex justify-between">
           <div className="text-slate-900 text-2xl">{result.rawData.name}</div>

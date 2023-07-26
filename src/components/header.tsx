@@ -4,6 +4,7 @@ import {
   FocusedItemData,
   RenderEntityPreviews,
   SearchBar,
+  onSearchFunc,
 } from "@yext/search-ui-react";
 import {
   provideHeadless,
@@ -48,21 +49,19 @@ const Header = () => {
   const state = useSearchState((state) => state.vertical.verticalKey);
   const searchActions = useSearchActions();
   const [path, setPath] = React.useState("");
-  React.useEffect(() => {
-    const currentPath = window.location.pathname;
-    setPath(currentPath);
-    return () => {};
-  }, []);
+
   useEffect(() => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
     (path === "home" || !path) && searchActions.setUniversal(),
       searchActions.setUniversalLimit({
         faqs: 5,
-        products: 5,
+        products: 12,
         locations: 5,
         blogs: 5,
         blog_details: 4,
       });
   }, []);
+
   const linkDoms = links.map((link) => (
     <div key={link.label}>
       <a href={link.url} rel="noreferrer">
@@ -70,11 +69,29 @@ const Header = () => {
       </a>
     </div>
   ));
+
   useEffect(() => {
     const currentPath = window.location.pathname;
     setPath(currentPath);
     return () => {};
   }, []);
+
+  // const handleSearch: onSearchFunc = (searchEventData) => {
+  //   const { query } = searchEventData;
+  //   searchActions.setQuery(query!);
+  //   state
+  //     ? (searchActions.setVertical(state), searchActions.executeVerticalQuery())
+  //     : (searchActions.setUniversal(),
+  //       searchActions.setUniversalLimit({
+  //         faqs: 5,
+  //         products: 12,
+  //         locations: 5,
+  //         blogs: 5,
+  //         blog_details: 4,
+  //       }),
+  //       searchActions.executeUniversalQuery());
+  // };
+
   const entityPreviewSearcher = provideHeadless({
     ...searchConfig,
     headlessId: "entity-preview-searcher",
@@ -141,37 +158,21 @@ const Header = () => {
             />
             <div className="w-1/2">
               {!state || state === "products" ? (
-                path && !path.includes("product-grid") ? (
-                  <SearchBar
-                    hideRecentSearches={true}
-                    customCssClasses={{
-                      searchBarContainer: "!mb-0",
-                      searchButton: "text-black",
-                    }}
-                    visualAutocompleteConfig={{
-                      entityPreviewSearcher: entityPreviewSearcher,
-                      includedVerticals: ["products"],
-                      renderEntityPreviews: renderEntityPreviews,
-                      universalLimit: { products: 4 },
-                      entityPreviewsDebouncingTime: 300,
-                    }}
-                  />
-                ) : (
-                  <SearchBar
-                    hideRecentSearches={true}
-                    customCssClasses={{
-                      searchBarContainer: "!mb-0",
-                      searchButton: "text-black",
-                    }}
-                    visualAutocompleteConfig={{
-                      entityPreviewSearcher: entityPreviewSearcher,
-                      includedVerticals: ["products"],
-                      renderEntityPreviews: renderEntityPreviews,
-                      universalLimit: { products: 4 },
-                      entityPreviewsDebouncingTime: 300,
-                    }}
-                  />
-                )
+                <SearchBar
+                  hideRecentSearches={true}
+                  customCssClasses={{
+                    searchBarContainer: "!mb-0",
+                    searchButton: "text-black",
+                  }}
+                  visualAutocompleteConfig={{
+                    entityPreviewSearcher: entityPreviewSearcher,
+                    includedVerticals: ["products"],
+                    renderEntityPreviews: renderEntityPreviews,
+                    universalLimit: { products: 4 },
+                    entityPreviewsDebouncingTime: 300,
+                  }}
+                  // onSearch={handleSearch}
+                />
               ) : (
                 <SearchBar
                   customCssClasses={{
@@ -179,6 +180,7 @@ const Header = () => {
                     searchButton: "text-black",
                   }}
                   hideRecentSearches={true}
+                  // onSearch={handleSearch}
                 />
               )}
             </div>

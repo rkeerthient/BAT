@@ -13,6 +13,7 @@ import {
 } from "@yext/pages";
 import PageLayout from "../components/page-layout";
 import BlogPage from "../wrappers/BlogPage";
+import Favicon from "../assets/images/favicon.ico";
 
 export const config: TemplateConfig = {
   name: "blogs",
@@ -21,13 +22,25 @@ export const getPath: GetPath<TemplateRenderProps> = () => {
   return `blogs`;
 };
 
-export const getHeadConfig: GetHeadConfig<
-  TemplateRenderProps
-> = (): HeadConfig => {
+export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
+  relativePrefixToRoot,
+  path,
+  document,
+}): HeadConfig => {
   return {
-    title: "BAT | Blogs",
+    title: "VUSE | Blogs",
     charset: "UTF-8",
     viewport: "width=device-width, initial-scale=1",
+    tags: [
+      {
+        type: "link",
+        attributes: {
+          rel: "icon",
+          type: "image/x-icon",
+          href: relativePrefixToRoot + Favicon,
+        },
+      },
+    ],
   };
 };
 

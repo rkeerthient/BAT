@@ -27,6 +27,7 @@ import List from "../components/list";
 import PageLayout from "../components/page-layout";
 import StaticMap from "../components/static-map";
 import "../index.css";
+import Favicon from "../assets/images/favicon.ico";
 
 /**
  * Required when Knowledge Graph data is used for a template.
@@ -108,6 +109,14 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
           content: document.description,
         },
       },
+      {
+        type: "link",
+        attributes: {
+          rel: "icon",
+          type: "image/x-icon",
+          href: relativePrefixToRoot + Favicon,
+        },
+      },
     ],
   };
 };
@@ -139,7 +148,7 @@ const Location: Template<TemplateRenderProps> = ({
 
   return (
     <>
-    {/* test */}
+      {/* test */}
       <PageLayout _site={_site}>
         <Banner name={name} address={address} openTime={openTime}>
           <div className="bg-white h-40 w-1/5 flex items-center justify-center text-center flex-col space-y-4 rounded-lg">

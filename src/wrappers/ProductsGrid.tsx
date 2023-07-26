@@ -17,6 +17,9 @@ const ProductsGrid = () => {
   const loading = useSearchState((state) => state.searchStatus.isLoading);
 
   useEffect(() => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const query = urlSearchParams.get("query");
+    query && searchActions.setQuery(query);
     searchActions.setVertical("products");
     searchActions.executeVerticalQuery();
   }, []);

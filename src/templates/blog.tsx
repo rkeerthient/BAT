@@ -23,6 +23,7 @@ import PageLayout from "../components/page-layout";
 import "../index.css";
 import { Image } from "@yext/pages/components";
 import RTF from "../components/RTF";
+import Favicon from "../assets/images/favicon.ico";
 
 /**
  * Required when Knowledge Graph data is used for a template.
@@ -94,6 +95,14 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
           content: document.description,
         },
       },
+      {
+        type: "link",
+        attributes: {
+          rel: "icon",
+          type: "image/x-icon",
+          href: relativePrefixToRoot + Favicon,
+        },
+      },
     ],
   };
 };
@@ -125,7 +134,9 @@ const SingleBlog: Template<TemplateRenderProps> = ({
                 <h1 className="text-4xl font-bold">{name}</h1>
                 <div>
                   in{" "}
-                  <span className="bg-gray-200 ml-2 p-2">{c_categories}</span>
+                  <span className="bg-gray-200 ml-2 p-2">
+                    <a href={`/blogs/?query=${c_categories}`}>{c_categories}</a>
+                  </span>
                 </div>
               </div>
             </div>
