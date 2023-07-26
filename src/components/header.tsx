@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import searchConfig from "./searchConfig";
 import Product from "../types/products";
 import { Image } from "@yext/react-components";
+import { useMyContext } from "./context/context";
 
 type Link = {
   label: string;
@@ -49,7 +50,10 @@ const Header = () => {
   const state = useSearchState((state) => state.vertical.verticalKey);
   const searchActions = useSearchActions();
   const [path, setPath] = React.useState("");
-
+  const { setNoData } = useMyContext();
+  const noResContext = {
+    noResults: true,
+  };
   useEffect(() => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     (path === "home" || !path) && searchActions.setUniversal(),
@@ -76,21 +80,35 @@ const Header = () => {
     return () => {};
   }, []);
 
-  // const handleSearch: onSearchFunc = (searchEventData) => {
-  //   const { query } = searchEventData;
-  //   searchActions.setQuery(query!);
-  //   state
-  //     ? (searchActions.setVertical(state), searchActions.executeVerticalQuery())
-  //     : (searchActions.setUniversal(),
-  //       searchActions.setUniversalLimit({
-  //         faqs: 5,
-  //         products: 12,
-  //         locations: 5,
-  //         blogs: 5,
-  //         blog_details: 4,
-  //       }),
-  //       searchActions.executeUniversalQuery());
-  // };
+  const handleSearch: onSearchFunc = (searchEventData) => {
+    const { query } = searchEventData;
+    searchActions.setQuery(query!);
+    state
+      ? (searchActions.setVertical(state), searchActions.executeVerticalQuery())
+      : (setNoData(false),
+        searchActions.setUniversal(),
+        searchActions.setUniversalLimit({
+          faqs: 5,
+          products: 12,
+          locations: 5,
+          blogs: 5,
+          blog_details: 4,
+        }),
+        searchActions.executeUniversalQuery().then((res) => {
+          !res!.verticalResults.length
+            ? (searchActions.setContext(noResContext),
+              searchActions.setUniversalLimit({
+                faqs: 0,
+                products: 12,
+                locations: 0,
+                blogs: 0,
+                blog_details: 0,
+              }),
+              searchActions.executeUniversalQuery(),
+              setNoData(true))
+            : console.log(res);
+        }));
+  };
 
   const entityPreviewSearcher = provideHeadless({
     ...searchConfig,
@@ -171,7 +189,7 @@ const Header = () => {
                     universalLimit: { products: 4 },
                     entityPreviewsDebouncingTime: 300,
                   }}
-                  // onSearch={handleSearch}
+                  onSearch={handleSearch}
                 />
               ) : (
                 <SearchBar

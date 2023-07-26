@@ -13,11 +13,13 @@ import BlogCard from "../components/Cards/BlogCard";
 import PromoCard from "../components/Cards/PromoCard";
 import Mapboxuniv from "../components/Cards/Mapboxuniv";
 import UnivLocationCard from "../components/Cards/univLocCard";
-import RTF from "../components/RTF";
+import { useMyContext } from "../components/context/context";
+import ContactForm from "../components/contactForm";
 
 const HomePage = () => {
   const loading = useSearchState((state) => state.searchStatus.isLoading);
   const results = useSearchState((state) => state.universal.verticals) || 0;
+  const { noData } = useMyContext();
   const LocationSection = ({ results, CardComponent, header }: any) => {
     return (
       <div>
@@ -71,48 +73,57 @@ const HomePage = () => {
       ) : (
         <>
           <DirectAnswer customCssClasses={{ answerContainer: "bg-white" }} />
-          <ResultsCount />
+          {!noData && <ResultsCount />}
           {results ? (
-            <UniversalResults
-              showAppliedFilters={true}
-              customCssClasses={{
-                universalResultsContainer: "w-full mx-auto my-12 ",
-              }}
-              verticalConfigMap={{
-                faqs: {
-                  CardComponent: FAQCard,
-                  viewAllButton: true,
-                  label: "FAQs",
-                },
-                products: {
-                  CardComponent: ProductCard,
-                  SectionComponent: GridSection,
-                  label: "Products",
-                  viewAllButton: true,
-                },
-                blog_details: {
-                  CardComponent: BlogCard,
-                  SectionComponent: NewSection,
-                  label: "Blogs",
-                  viewAllButton: true,
-                },
-                blogs: {
-                  CardComponent: BlogCard,
-                  SectionComponent: GridSection,
-                  label: "Blogs",
-                  viewAllButton: true,
-                },
-                promo: {
-                  CardComponent: PromoCard,
-                  label: "Promotion",
-                },
-                locations: {
-                  CardComponent: UnivLocationCard,
-                  SectionComponent: LocationSection,
-                  viewAllButton: true,
-                },
-              }}
-            />
+            <>
+              {noData && (
+                <h2 className="font-bold text-center w-full text-xl mt-8 -mb-8">
+                  We couldn't find what you were looking for, but may we suggest
+                  browsing our latest Vuse products?
+                </h2>
+              )}
+              <UniversalResults
+                showAppliedFilters={true}
+                customCssClasses={{
+                  universalResultsContainer: "w-full mx-auto my-6 ",
+                }}
+                verticalConfigMap={{
+                  faqs: {
+                    CardComponent: FAQCard,
+                    viewAllButton: true,
+                    label: "FAQs",
+                  },
+                  products: {
+                    CardComponent: ProductCard,
+                    SectionComponent: GridSection,
+                    label: "Products",
+                    viewAllButton: true,
+                  },
+                  blog_details: {
+                    CardComponent: BlogCard,
+                    SectionComponent: NewSection,
+                    label: "Blogs",
+                    viewAllButton: true,
+                  },
+                  blogs: {
+                    CardComponent: BlogCard,
+                    SectionComponent: GridSection,
+                    label: "Blogs",
+                    viewAllButton: true,
+                  },
+                  promo: {
+                    CardComponent: PromoCard,
+                    label: "Promotion",
+                  },
+                  locations: {
+                    CardComponent: UnivLocationCard,
+                    SectionComponent: LocationSection,
+                    viewAllButton: true,
+                  },
+                }}
+              />
+              {noData && <ContactForm />}
+            </>
           ) : (
             <div className="space-y-4">
               <img src="https://i.imgur.com/LMlNrCZ.png" alt="" />

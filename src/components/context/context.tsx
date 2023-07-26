@@ -2,10 +2,8 @@ import { createContext, useContext, useState } from "react";
 import * as React from "react";
 
 interface MyContextType {
-  promoData: any;
-  custLoad: boolean;
-  setPromoData: React.Dispatch<React.SetStateAction<any>>;
-  setCustLoad: React.Dispatch<React.SetStateAction<boolean>>;
+  noData: boolean;
+  setNoData: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const MyContext = createContext<MyContextType | undefined>(undefined);
@@ -25,12 +23,14 @@ interface MyContextProviderProps {
 export const MyContextProvider: React.FC<MyContextProviderProps> = ({
   children,
 }) => {
-  const [promoData, setPromoData] = useState<[any]>();
-  const [custLoad, setCustLoad] = useState<boolean>(false);
+  const [noData, setNoData] = useState<boolean>(false);
 
   return (
     <MyContext.Provider
-      value={{ promoData, custLoad, setPromoData, setCustLoad }}
+      value={{
+        noData,
+        setNoData,
+      }}
     >
       {children}
     </MyContext.Provider>
