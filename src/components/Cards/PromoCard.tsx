@@ -6,7 +6,6 @@ const PromoCard = (props: CardProps<any>): JSX.Element => {
   const { result } = props;
   const { name } = result;
   const { primaryPhoto, description } = result.rawData;
-  console.log(JSON.stringify(result));
 
   return (
     <div className="w-full my-4 border bg-[#1e1e1c]">

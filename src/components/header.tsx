@@ -17,7 +17,7 @@ import searchConfig from "./searchConfig";
 import Product from "../types/products";
 import { Image } from "@yext/react-components";
 import { useMyContext } from "./context/context";
-
+import SpeechToText from "./SpeechToText";
 type Link = {
   label: string;
   url: string;
@@ -54,6 +54,15 @@ const Header = () => {
   const noResContext = {
     noResults: true,
   };
+
+  const handleDataFromChild = (data: any, listenStatus: any) => {
+    data && searchActions.setQuery(data);
+    !listenStatus && !state
+      ? (searchActions.setUniversal(), searchActions.executeUniversalQuery())
+      : (searchActions.setVertical(state!),
+        searchActions.executeVerticalQuery());
+  };
+
   useEffect(() => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     (path === "home" || !path) && searchActions.setUniversal(),
@@ -175,34 +184,41 @@ const Header = () => {
               className="w-36"
             />
             <div className="w-1/2">
-              {!state || state === "products" ? (
-                <SearchBar
-                  hideRecentSearches={true}
-                  customCssClasses={{
-                    searchBarContainer: "!mb-0",
-                    searchButton: "text-black",
-                  }}
-                  visualAutocompleteConfig={{
-                    entityPreviewSearcher: entityPreviewSearcher,
-                    includedVerticals: ["products"],
-                    renderEntityPreviews: renderEntityPreviews,
-                    universalLimit: { products: 4 },
-                    entityPreviewsDebouncingTime: 300,
-                  }}
-                  onSearch={handleSearch}
-                />
-              ) : (
-                <SearchBar
-                  customCssClasses={{
-                    searchBarContainer: "!mb-0",
-                    searchButton: "text-black",
-                  }}
-                  hideRecentSearches={true}
-                  // onSearch={handleSearch}
-                />
-              )}
+              <div className="w-full flex bg-white gap-2 items-center pr-3">
+                {!state || state === "products" ? (
+                  <SearchBar
+                    hideRecentSearches={true}
+                    customCssClasses={{
+                      searchBarContainer: "!mb-0 flex-1 searchBar",
+                      searchButton: "text-black",
+                    }}
+                    visualAutocompleteConfig={{
+                      entityPreviewSearcher: entityPreviewSearcher,
+                      includedVerticals: ["products"],
+                      renderEntityPreviews: renderEntityPreviews,
+                      universalLimit: { products: 4 },
+                      entityPreviewsDebouncingTime: 300,
+                    }}
+                    onSearch={handleSearch}
+                  />
+                ) : (
+                  <SearchBar
+                    customCssClasses={{
+                      searchBarContainer: "!mb-0 flex-1 searchBar",
+                      searchButton: "text-black searchBar",
+                    }}
+                    hideRecentSearches={true}
+                  />
+                )}
+                <div className="w-fit text-black">
+                  <SpeechToText
+                    sendDataToParent={handleDataFromChild}
+                  ></SpeechToText>
+                </div>
+              </div>
             </div>
           </div>
+
           <div className="flex flex-row justify-start !gap-x-20 text-lg font-semibold w-full">
             {linkDoms}
           </div>

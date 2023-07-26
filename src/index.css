@@ -121,3 +121,10 @@
   font-size: 2.25rem;
   font-weight: 400;
 }
+.searchBar > div {
+  @apply !rounded-none !border-none;
+}
+
+.searchBar {
+  @apply !mb-0;
+}

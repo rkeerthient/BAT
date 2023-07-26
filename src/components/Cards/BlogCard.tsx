@@ -6,7 +6,6 @@ const BlogCard = (props: CardProps<any>): JSX.Element => {
   const { result } = props;
   const { name } = result;
   const { primaryPhoto, slug, id, c_blogDetailLink } = result.rawData;
-  console.log(JSON.stringify(result));
 
   return (
     <div className="w-full my-4 border bg-white">
