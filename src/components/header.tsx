@@ -103,20 +103,21 @@ const Header = () => {
           blogs: 5,
           blog_details: 4,
         }),
-        searchActions.executeUniversalQuery().then((res) => {
-          !res!.verticalResults.length
-            ? (searchActions.setContext(noResContext),
-              searchActions.setUniversalLimit({
-                faqs: 0,
-                products: 12,
-                locations: 0,
-                blogs: 0,
-                blog_details: 0,
-              }),
-              searchActions.executeUniversalQuery(),
-              setNoData(true))
-            : console.log(res);
-        }));
+        query &&
+          searchActions.executeUniversalQuery().then((res) => {
+            !res!.verticalResults.length
+              ? (searchActions.setContext(noResContext),
+                searchActions.setUniversalLimit({
+                  faqs: 0,
+                  products: 12,
+                  locations: 0,
+                  blogs: 0,
+                  blog_details: 0,
+                }),
+                searchActions.executeUniversalQuery(),
+                setNoData(true))
+              : console.log(res);
+          }));
   };
 
   const entityPreviewSearcher = provideHeadless({
