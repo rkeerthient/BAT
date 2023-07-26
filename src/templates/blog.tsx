@@ -117,17 +117,21 @@ const SingleBlog: Template<TemplateRenderProps> = ({
   return (
     <>
       <PageLayout _site={_site}>
-        <div className="centered-container bg-white p-8 w-full">
-          <div className="flex items-center justify-between">
-            <div className="space-y-4 w-1/2 flex flex-col gap-3">
-              <h1 className="text-4xl font-bold">{name}</h1>
-              <div>
-                in <span className="bg-gray-200 ml-2 p-2">{c_categories}</span>
+        <div className="pb-6 ">
+          <div className="h-48 bg-[#00695d]"></div>
+          <div className=" bg-white p-8 w-full -mt-24 max-w-screen-2xl mx-auto">
+            <div className="flex items-center justify-between">
+              <div className="space-y-4 w-1/2 flex flex-col gap-3">
+                <h1 className="text-4xl font-bold">{name}</h1>
+                <div>
+                  in{" "}
+                  <span className="bg-gray-200 ml-2 p-2">{c_categories}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div>
-            <RTF>{richTextDescription}</RTF>
+            <div className="rtdText">
+              <RTF>{richTextDescription}</RTF>
+            </div>
           </div>
         </div>
       </PageLayout>
