@@ -15,11 +15,14 @@ import Mapboxuniv from "../components/Cards/Mapboxuniv";
 import UnivLocationCard from "../components/Cards/univLocCard";
 import { useMyContext } from "../components/context/context";
 import ContactForm from "../components/contactForm";
+import RTF from "../components/RTF";
 
 const HomePage = () => {
   const loading = useSearchState((state) => state.searchStatus.isLoading);
   const results = useSearchState((state) => state.universal.verticals) || 0;
   const { noData } = useMyContext();
+  const featuredSnippet = useSearchState((state) => state.directAnswer.result);
+
   const LocationSection = ({ results, CardComponent, header }: any) => {
     return (
       <div>
@@ -66,13 +69,33 @@ const HomePage = () => {
       </div>
     );
   };
+  const buildResponse = (snippet: any) => {
+    return (
+      <div className="flex flex-col bg-white my-4 mb-8 p-4 gap-4">
+        <RTF>{snippet.snippet.value}</RTF>
+        <div className="pt-4 text-neutral">
+          Read more about{" "}
+          <a
+            className="text-primary"
+            href={`/${snippet.relatedResult.rawData.slug}`}
+          >
+            {snippet.relatedResult.rawData.name}
+          </a>
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="centered-container">
       {loading ? (
         <Loader></Loader>
       ) : (
         <>
-          <DirectAnswer customCssClasses={{ answerContainer: "bg-white" }} />
+          {featuredSnippet && featuredSnippet.fieldType !== "rich_text" ? (
+            <DirectAnswer customCssClasses={{ answerContainer: "bg-white" }} />
+          ) : (
+            featuredSnippet && buildResponse(featuredSnippet)
+          )}
           {!noData && <ResultsCount />}
           {results ? (
             <>
