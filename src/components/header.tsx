@@ -18,6 +18,7 @@ import Product from "../types/products";
 import { Image } from "@yext/react-components";
 import { useMyContext } from "./context/context";
 import SpeechToText from "./SpeechToText";
+import { userInfo } from "os";
 type Link = {
   label: string;
   url: string;
@@ -51,9 +52,6 @@ const Header = () => {
   const searchActions = useSearchActions();
   const [path, setPath] = React.useState("");
   const { setNoData } = useMyContext();
-  const noResContext = {
-    noResults: true,
-  };
 
   const handleDataFromChild = (data: any, listenStatus: any) => {
     data && searchActions.setQuery(data);
@@ -92,9 +90,13 @@ const Header = () => {
   const handleSearch: onSearchFunc = (searchEventData) => {
     const { query } = searchEventData;
     searchActions.setQuery(query!);
+
     state
       ? (searchActions.setVertical(state), searchActions.executeVerticalQuery())
       : (setNoData(false),
+        searchActions.setContext({
+          noResults: false,
+        }),
         searchActions.setUniversal(),
         searchActions.setUniversalLimit({
           faqs: 5,
@@ -105,8 +107,10 @@ const Header = () => {
         }),
         query &&
           searchActions.executeUniversalQuery().then((res) => {
-            !res!.verticalResults.length
-              ? (searchActions.setContext(noResContext),
+            !res.verticalResults.length
+              ? (searchActions.setContext({
+                  noResults: false,
+                }),
                 searchActions.setUniversalLimit({
                   faqs: 0,
                   products: 12,
@@ -116,7 +120,8 @@ const Header = () => {
                 }),
                 searchActions.executeUniversalQuery(),
                 setNoData(true))
-              : console.log(res);
+              : searchActions.setContext({ ...noResContext, noResults: false }),
+              console.log(res);
           }));
   };
 
