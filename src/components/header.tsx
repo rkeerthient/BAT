@@ -64,14 +64,18 @@ const Header = () => {
   };
 
   useEffect(() => {
-    (path === "home" || !path) && searchActions.setUniversal(),
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const query = urlSearchParams.get("query");
+    query && searchActions.setQuery(query);
+    (path === "index.html" || !path) && searchActions.setUniversal(),
       searchActions.setUniversalLimit({
         faqs: 5,
         products: 12,
         locations: 5,
         blogs: 5,
         blog_details: 4,
-      });
+      }),
+      searchActions.executeUniversalQuery();
   }, []);
 
   const linkDoms = links.map((link) => (
@@ -90,12 +94,9 @@ const Header = () => {
 
   const handleSearch: onSearchFunc = (searchEventData) => {
     const { query } = searchEventData;
-    console.log(query);
     if (query) {
       setPathAndQueryParams("query", query ?? "");
     } else {
-      console.log("inn");
-
       removeQueryParam("query");
     }
     query && searchActions.setQuery(query);
