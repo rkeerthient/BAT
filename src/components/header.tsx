@@ -67,7 +67,9 @@ const Header = () => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const query = urlSearchParams.get("query");
     query && searchActions.setQuery(query);
-    (path === "index.html" || !path) && searchActions.setUniversal(),
+    query &&
+      (path === "index.html" || !path) &&
+      (searchActions.setUniversal(),
       searchActions.setUniversalLimit({
         faqs: 5,
         products: 12,
@@ -75,7 +77,7 @@ const Header = () => {
         blogs: 5,
         blog_details: 4,
       }),
-      searchActions.executeUniversalQuery();
+      searchActions.executeUniversalQuery());
   }, []);
 
   const linkDoms = links.map((link) => (
