@@ -18,7 +18,7 @@ import Product from "../types/products";
 import { Image } from "@yext/react-components";
 import { useMyContext } from "./context/context";
 import SpeechToText from "./SpeechToText";
-import { userInfo } from "os";
+import { setPathAndQueryParams, removeQueryParam } from "./util";
 type Link = {
   label: string;
   url: string;
@@ -52,7 +52,9 @@ const Header = () => {
   const searchActions = useSearchActions();
   const [path, setPath] = React.useState("");
   const { setNoData } = useMyContext();
-
+  let noResContext = {
+    noResults: false,
+  };
   const handleDataFromChild = (data: any, listenStatus: any) => {
     data && searchActions.setQuery(data);
     !listenStatus && !state
@@ -62,7 +64,6 @@ const Header = () => {
   };
 
   useEffect(() => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
     (path === "home" || !path) && searchActions.setUniversal(),
       searchActions.setUniversalLimit({
         faqs: 5,
@@ -89,14 +90,20 @@ const Header = () => {
 
   const handleSearch: onSearchFunc = (searchEventData) => {
     const { query } = searchEventData;
-    searchActions.setQuery(query!);
+    console.log(query);
+    if (query) {
+      setPathAndQueryParams("query", query ?? "");
+    } else {
+      console.log("inn");
+
+      removeQueryParam("query");
+    }
+    query && searchActions.setQuery(query);
 
     state
       ? (searchActions.setVertical(state), searchActions.executeVerticalQuery())
       : (setNoData(false),
-        searchActions.setContext({
-          noResults: false,
-        }),
+        searchActions.setContext({ ...noResContext, noResults: false }),
         searchActions.setUniversal(),
         searchActions.setUniversalLimit({
           faqs: 5,
@@ -109,7 +116,7 @@ const Header = () => {
           searchActions.executeUniversalQuery().then((res) => {
             !res.verticalResults.length
               ? (searchActions.setContext({
-                  noResults: false,
+                  noResults: true,
                 }),
                 searchActions.setUniversalLimit({
                   faqs: 0,
